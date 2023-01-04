@@ -1,0 +1,9 @@
+.editor-container-block .DraftEditor-root {
+    min-height: 30vh;
+}
+.editor-container-block {
+    padding: 5px;
+}
+.editor-main-block {
+    border: 1px solid #d9d9d9;
+}

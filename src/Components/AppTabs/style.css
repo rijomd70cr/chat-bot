@@ -1,0 +1,22 @@
+.css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+    min-height: 20px !important;
+}
+.css-1ujnqem-MuiTabs-root {
+    min-height: 39px !important;
+}
+.css-19kzrtu {
+    padding: unset !important;
+    padding-top: 10px !important;
+}
+.MuiBox-root.css-19kzrtu {
+    font-size: 13px !important;
+}
+@media (min-width: 600px) {
+    .css-hyum1k-MuiToolbar-root {
+        min-height: 40px !important;
+    }
+}
+  
+.css-hyum1k-MuiToolbar-root {
+    min-height: 40px !important;
+}

@@ -1,0 +1,18 @@
+.app-data-table .rdt_TableHeadRow {
+    min-height: 35px !important;
+    background: rgb(229, 229, 229);
+}
+
+.app-data-table .rdt_TableCol {
+    font-weight: 700 !important;
+    font-size: 11px;
+}
+
+.app-data-table .rdt_TableRow {
+    min-height: 28px;
+    font-size: 11px;
+}
+.rdt_TableRow:hover {
+    background: rgb(241, 241, 241);
+    cursor: pointer;
+}
