@@ -18,7 +18,7 @@ export default function Chat() {
     var CryptoJS = require("crypto-js");
     let mySecretKey = "HIiam@@@@RRRRRRMMMMMMMM#######";
     let styles = { width: "fit-content", padding: "4px", borderRadius: 5, margin: 0, margin: "8px 8px" };
-    let sendDiv = { width: "98%", position: "absolute", bottom: "0", left: "0", height: "40px", display: "flex", border: "1px solid #ccc", padding: "5px", margin: "5px" };
+    let sendDiv = { width: "98%", position: "absolute", bottom: "0", left: "0", height: "40px", display: "flex", border: "1px solid #ccc", padding: "5px", margin: "1rem 5px" };
 
     const [isOpenAddmodal, setOpenAddModal] = useState(false);
     const actions = [
@@ -146,7 +146,6 @@ export default function Chat() {
                 setNumber(number + 1);
                 setMessage("");
                 console.log("messages sent successfully", friendId);
-                // setTimeout(function () { conn.close(); }, 500);
             });
         }
     }
@@ -158,7 +157,6 @@ export default function Chat() {
             getUserMedia({ video: true, audio: true }, (mediaStream) => {
                 currentUserVideoRef.current.srcObject = mediaStream;
                 currentUserVideoRef.current.play();
-                // window.call = peerInstance.current.call(friendId, mediaStream);
                 const call = peerInstance.current.call(friendId, mediaStream);
                 console.log("call opened", call);
                 call.on('stream', (remoteStream) => {
@@ -174,7 +172,7 @@ export default function Chat() {
     }
 
     const endCall = () => {
-        // window.call.on("close", () => { setOpenCallSection(false); });
+        setOpenCallSection(false)
     }
 
     // shareScreen option
@@ -226,7 +224,7 @@ export default function Chat() {
     }, [number, render]);
 
     const actionsSend = [
-        { icon: <DuoIcon />, name: 'Vedio Call', function: () => call },
+        { icon: <DuoIcon />, name: 'Vedio Call', function: () => call() },
         { icon: <IosShareIcon />, name: 'Share Screen', function: () => shareScreen() },
     ];
 
@@ -264,7 +262,7 @@ export default function Chat() {
                             <table style={{ width: "100%", textAlign: "left", borderCollapse: "collapse", }}>
                                 <tbody>
                                     <tr style={{ height: "50px", background: "rgb(244 245 246)", color: "black", }}>
-                                        <th style={{ padding: "5px" }} colSpan={2}>Users</th>
+                                        <th style={{ padding: "5px" }} colSpan={2}>Friend List</th>
                                     </tr>
                                     {users.length === 0 && <tr style={{ textAlign: "left", height: "40px" }}><td style={{ padding: "5px" }} colSpan={3}>No Friends</td></tr>}
                                     {users?.length > 0 && users.map((item, i) => (
@@ -292,7 +290,7 @@ export default function Chat() {
                             {friendId && <div style={sendDiv}>
                                 <TextField sx={{ width: "90%" }} InputProps={{ disableUnderline: true }} placeholder="Enter Message" variant='standard'
                                     multiline onChange={handleChange} value={message} />
-                                <SendIcon sx={{ fontSize: "18px", color: "#6d6868", margin: "5px" }} onClick={send} />
+                                <SendIcon sx={{ fontSize: "18px", color: "#6d6868", margin: "5px", cursor: "pointer", ':hover': { color: "#1976d2" } }} onClick={send} />
                                 <SpeedDial ariaLabel="SpeedDial basic example"
                                     sx={{ position: 'relative', '& .MuiFab-primary': { backgroundColor: '#ccc', color: 'white', width: 40, height: 50, margin: -0.3, } }} direction={"up"}
                                     icon={<SpeedDialIcon />}
