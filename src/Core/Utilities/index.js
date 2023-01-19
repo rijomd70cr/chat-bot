@@ -17,7 +17,11 @@ export const url = (url) => {
     if(urlString[0] !== '/') url = '/' + url
     return encodeURI(`${Config.API_URL}${url}`);
 }
-
+export const testUrl = (url) => {
+    let urlString = url.split("");
+    if (urlString[0] !== "/") url = "/" + url;
+    return encodeURI(`${Config.API_URL_TEST_URl}${url}`);
+  };
 export const serverValidationError = (value) => value ? value[0] : null; 
 
 export const getMenus = () => Menus;

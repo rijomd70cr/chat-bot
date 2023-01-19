@@ -4,10 +4,11 @@ import ReleaseManagement from './ReleaseManagement';
 import Clients from './Clients';
 import Deployment from './Deployment';
 import GitManagement from './GitManagement';
+import PublishManagement from './PublishManagement';
 
 
 const Modules = {
-    Auth, Dashboard, ReleaseManagement, Clients, Deployment, GitManagement
+    Auth, Dashboard, ReleaseManagement, Clients, Deployment, GitManagement,PublishManagement
 }
 
 export {
