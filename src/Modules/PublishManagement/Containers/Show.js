@@ -6,7 +6,9 @@ import Page from "../../../Components/Page";
 import Button from "../../../Components/Button";
 import AppSnackBar from "../../../Components/SnackBar";
 import AppTabs from "../../../Components/AppTabs";
+
 import DoccumentList from "../Components/DoccumentList";
+import DoccumentEditor from "../Components/DoccumentEditor";
 
 import { appDateFormat } from "../../../Core/Utilities";
 import { getPublishList, updatePublishData } from "../Reducer/Actions";
@@ -15,11 +17,10 @@ export default function Show() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [isSubmit, setSubmit] = useState(false);
-  let listData = { title: "aaaa" };
 
-  const fetchData = useEffect(() => {
+  useEffect(() => {
     dispatch(getPublishList(id));
-  }, [dispatch, id]);
+  }, [id]);
 
   const { data } = useSelector((state) => ({
     data: state?.publishmanagement?.data[0]?.table,
@@ -30,15 +31,21 @@ export default function Show() {
   const onClick = () => {
     console.log("hhhaaii");
   };
-  const saveDoccumentForm = (data) => {
+  const saveDoccumentForm = (fileData) => {
     let query = {
-      ...data,
+      ...fileData,
       id: id,
     };
     dispatch(updatePublishData(query));
   };
-
-  console.log(publishData,"publishData")
+  const saveNotes = (notes) => {
+    let query = {
+      id: id,
+      isAddNotes: true,
+      notes: notes,
+    };
+    dispatch(updatePublishData(query));
+  };
   return (
     <div>
       <Page
@@ -61,7 +68,7 @@ export default function Show() {
                   </tr>
                   <tr>
                     <td> Updated at </td>
-                    <td> : {appDateFormat(publishData?.created_at)}</td>
+                    <td> : {appDateFormat(publishData?.updated_at)}</td>
                   </tr>
                   <tr>
                     <td> Created by </td>
@@ -100,7 +107,12 @@ export default function Show() {
               },
               {
                 label: "Advanced",
-                component: <p>kkk</p>,
+                component: (
+                  <DoccumentEditor
+                    saveNotes={(notes) => saveNotes(notes)}
+                    savedData={publishData?.notes}
+                  />
+                ),
               },
             ]}
           />

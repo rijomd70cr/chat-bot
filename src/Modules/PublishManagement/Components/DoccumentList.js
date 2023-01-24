@@ -1,19 +1,35 @@
 import React, { useState } from "react";
+
 import NormalDataTable from "../../../Components/AppDataTable/NormalDataTable";
 import Button from "../../../Components/Button";
 import AppModalPopUp from "../../../Components/AppModalPopUp";
 import DoccumentForm from "./DoccumentForm";
+
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Divider } from "@mui/material";
 
 export default function DoccumentList({
   data = [],
   onSumbitDoccumentForm = () => {},
 }) {
   const [isOpenModal, setOpenModal] = useState(false);
+  const [isOpenDeleteModal, setOpenDeleteModal] = useState(false);
+  const [deleteData, setDeleteData] = useState();
+
   const onOpenModal = () => {
     setOpenModal(true);
   };
   const closeModal = () => {
     setOpenModal(false);
+  };
+  const deleteItem = () => {
+    let item = { ...deleteData };
+    item.delete = true;
+    setOpenDeleteModal(false);
+    onSumbitDoccumentForm(item);
+  };
+  const onRowClicked = (data) => {
+    console.log(data, "onRowClicked");
   };
   return (
     <div>
@@ -36,28 +52,62 @@ export default function DoccumentList({
       <div style={{ marginTop: 10 }}>
         <NormalDataTable
           data={data}
-          changeData={[
+          onRowClicked={(data) => onRowClicked(data)}
+          hideColumns={["description", "file"]}
+          moreColumns={[
             {
-              name: "label",
-              selector: (row) => row.label,
-            },
-            {
-              name: "key",
-              selector: (row) => row.key,
-            },
-            {
-              name: "description",
-              selector: (row) => row.description,
+              name: "Actions",
+              cell: (row) => {
+                return (
+                  <DeleteIcon
+                    onClick={() => {
+                      console.log(row, "row");
+                      setOpenDeleteModal(true);
+                      setDeleteData(row);
+                    }}
+                  />
+                );
+              },
             },
           ]}
         />
       </div>
-      <AppModalPopUp open={isOpenModal}>
+      <AppModalPopUp open={isOpenModal || isOpenDeleteModal}>
         {isOpenModal && (
           <DoccumentForm
             onClose={closeModal}
-            onSumbitDoccumentForm={(form)=>{onSumbitDoccumentForm(form);closeModal()}}
+            onSumbitDoccumentForm={(form) => {
+              onSumbitDoccumentForm(form);
+              closeModal();
+            }}
           />
+        )}
+        {isOpenDeleteModal && (
+          <div>
+            <div style={{ display: "flex" }}>
+              <p style={{ flex: 3, margin: 0 }}>Are you sure to delete this?</p>
+              <p
+                style={{
+                  textAlign: "right",
+                  flex: 1,
+                  cursor: "pointer",
+                  margin: 0,
+                }}
+                onClick={() => {
+                  setOpenDeleteModal(false);
+                }}
+              >
+                X
+              </p>
+            </div>
+            <Divider />
+            <Button
+              label="Yes"
+              type="submit"
+              loading={false}
+              onClick={deleteItem}
+            />
+          </div>
         )}
       </AppModalPopUp>
     </div>

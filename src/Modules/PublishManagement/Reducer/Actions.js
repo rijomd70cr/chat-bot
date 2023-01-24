@@ -44,3 +44,22 @@ export const updatePublishData = (data) => (dispatch) => {
       });
   });
 };
+
+export const uploadDoccuments = (data) => (dispatch) => {
+  let formData = new FormData();
+  formData.append("file", data);
+  return new Promise((resolve, reject) => {
+    return request(
+      "http://192.168.1.78:8000/publish/upload",
+      formData,
+      "POST",
+      true
+    )
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};

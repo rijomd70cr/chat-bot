@@ -3,16 +3,15 @@ import { destroyAuth, getAuthToken } from "../Auth";
 export const request = (url, body = "", method = "GET", isFile = false) => {
   return new Promise((resolve, reject) => {
     var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
     if (getAuthToken()) {
       myHeaders.append("Authorization", getAuthToken());
     }
+    let urlencoded ;
 
-    let urlencoded = "";
-    if (body) {
+    if (!isFile) {
       urlencoded = JSON.stringify(body);
+      myHeaders.append("Content-Type", "application/json");
     }
-
     if (isFile) {
       urlencoded = body;
     }
